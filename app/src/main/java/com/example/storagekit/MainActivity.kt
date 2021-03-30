@@ -4,10 +4,12 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.executor.kit.ExecutorKit
-import com.log.kit.ILog
-import com.log.kit.ILogManager
-import com.log.kit.print.view.IViewPrintProvider
-import com.log.kit.print.view.IViewPrinter
+import com.log.kit.LogKit
+
+import com.log.kit.LogKitManager
+
+import com.log.kit.print.view.ViewPrintProvider
+import com.log.kit.print.view.ViewPrinter
 import com.storage.kit.StorageKit
 import java.util.*
 
@@ -15,14 +17,14 @@ class MainActivity : AppCompatActivity() {
 
     private val KEY = "key"
 
-    private var mViewPrinter: IViewPrinter? = null
-    private var mPrintProvider: IViewPrintProvider? = null
+    private var mViewPrinter: ViewPrinter? = null
+    private var mPrintProvider: ViewPrintProvider? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        mViewPrinter = IViewPrinter(this)
-        ILogManager.getInstance().addPrinter(mViewPrinter)
+        mViewPrinter = ViewPrinter(this)
+        LogKitManager.getInstance().addPrinter(mViewPrinter)
         mPrintProvider = mViewPrinter?.getViewPrintProvider()
         mPrintProvider?.showFloatingView()
     }
@@ -39,7 +41,7 @@ class MainActivity : AppCompatActivity() {
 
         ExecutorKit.execute(runnable =Runnable {
             StorageKit.saveCache(KEY, list)
-            ILog.v("存储的数据: $list")
+            LogKit.v("存储的数据: $list")
         })
     }
 
@@ -49,7 +51,7 @@ class MainActivity : AppCompatActivity() {
     fun onShow(view: View?) {
         ExecutorKit.execute(runnable =Runnable {
             val list: ArrayList<String>? = StorageKit.getCache(KEY)
-            ILog.i("打印数据: $list")
+            LogKit.i("打印数据: $list")
         })
     }
 
@@ -58,7 +60,7 @@ class MainActivity : AppCompatActivity() {
      */
     fun onDelete(view: View?) {
         ExecutorKit.execute(runnable =Runnable {
-            ILog.e("删除数据")
+            LogKit.e("删除数据")
             StorageKit.deleteCache(KEY)
         })
     }
@@ -73,7 +75,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onDestroy() {
-        ILogManager.getInstance().removePrinter(mViewPrinter)
+        LogKitManager.getInstance().removePrinter(mViewPrinter)
         super.onDestroy()
     }
 }
