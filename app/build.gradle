@@ -40,5 +40,6 @@ dependencies {
 
     implementation 'com.android.ydkit:executor-kit:1.0.0'
 
-    implementation project(path: ':storage-kit')
+//    implementation project(path: ':storage-kit')
+    implementation 'com.android.ydkit:storage-kit:1.0.0'
 }

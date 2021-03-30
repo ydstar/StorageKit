@@ -21,6 +21,9 @@ allprojects {
         maven {
             url = "https://dl.bintray.com/ydswifty/ExecutorKitRepo"
         }
+        maven {
+            url = "https://dl.bintray.com/ydswifty/StorageKitRepo"
+        }
     }
 }
 
