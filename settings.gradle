@@ -1,0 +1,3 @@
+include ':storage-kit'
+include ':app'
+rootProject.name = "StorageKit"
